@@ -11,7 +11,7 @@ import java.util.Enumeration;
 public class ServletUtil {
 
     /**
-     * 获取真实IP地址
+     * Get real IP address
      *
      * @param httpServletRequest
      * @return
@@ -47,7 +47,7 @@ public class ServletUtil {
     }
 
     /**
-     * 根据网卡获取本机IP
+     * Get local IP by network interface card
      *
      * @return
      */

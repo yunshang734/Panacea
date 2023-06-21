@@ -40,5 +40,4 @@ public class RespDTO<T extends BaseMeta> {
         this.code = code;
         this.message = message;
     }
-
 }

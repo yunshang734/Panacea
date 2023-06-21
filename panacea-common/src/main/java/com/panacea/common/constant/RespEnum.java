@@ -2,12 +2,14 @@ package com.panacea.common.constant;
 
 public enum RespEnum {
 
-    SUCCESS(200, true, "成功"),
-    PARAM_ERROR(400, false, "参数错误"),
-    RECV_MSG_SIGN_FAIL(401, false, "验签错误"),
-    NOT_FOUND(404, false, "未找到资源"),
-    SERVER_ERROR(500, false, "服务器错误"),
-    FAIL(503, false, "错误");
+    SUCCESS(200, true, "Success"),
+    PARAM_ERROR(400, false, "Parameter Error"),
+    RECV_MSG_SIGN_FAIL(401, false, "Need Authentication"),
+    FORBIDDEN(403, false, "Forbidden"),
+    NOT_FOUND(404, false, "Not Found"),
+    NOT_ACCEPTABLE(406, false, "Not Acceptable"),
+    SERVER_ERROR(500, false, "Server Error"),
+    FAIL(503, false, "Service Unavaliable");
 
     private Integer code;
     private Boolean success;

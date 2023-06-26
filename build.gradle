@@ -34,7 +34,7 @@ subprojects {
         testImplementation('org.springframework.boot:spring-boot-starter-test')
 
         // FastJSON
-        compileOnly('com.alibaba:fastjson:2.0.28')
+        implementation('com.alibaba:fastjson:2.0.28')
 
         // OKHttp
         implementation(platform("com.squareup.okhttp3:okhttp-bom:4.11.0"))

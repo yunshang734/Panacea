@@ -103,8 +103,4 @@ public class OkHttpUtil {
             return EMPTY_STRING;
         }
     }
-
-    public static void main(String[] args) {
-        OkHttpUtil.doGet("https://ads.lejuliang.com/getAd?app_key=7827ef3054004b81832a063472ab7896&adid=3500532");
-    }
 }

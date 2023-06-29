@@ -13,6 +13,8 @@ public class OkHttpUtil {
 
     private final static String EMPTY_STRING = "";
     private final static String DEFAULT_CHARSET = "UTF-8";
+    private final static MediaType jsonMediaType = MediaType.parse("application/json; charset=utf-8");
+
 
     private static OkHttpClient okHttpClient = new OkHttpClient.Builder()
             .connectTimeout(60L, TimeUnit.SECONDS)
@@ -22,84 +24,88 @@ public class OkHttpUtil {
             .build();
 
     public static String doGet(String url) {
-        Request request = new Request.Builder()
-                .url(url)
-                .build();
         String requestId = IdUtil.simpleUUID();
-        log.info("RequestId: {}, OkHttpUtil.doGet({}) start!", requestId, url);
-        return doCall(requestId, request, url, null, null);
+        Request request = initRequest(url, null, null, null);
+        return doCall(requestId, request, url, null, null, null);
     }
 
     public static String doGet(String url, Map<String, String> headerMap) {
-        Headers headers = initHeaders(headerMap);
-        Request request = new Request.Builder()
-                .url(url)
-                .headers(headers)
-                .build();
         String requestId = IdUtil.simpleUUID();
+        Request request = initRequest(url, headerMap, null, null);
         log.info("RequestId: {}, OkHttpUtil.doGet({}, {}) start!", requestId, url, JSON.toJSON(headerMap));
-        return doCall(requestId, request, url, headerMap, null);
+        return doCall(requestId, request, url, headerMap, null, null);
     }
 
     public static String doPostWithFormData(String url, Map<String, String> parameterMap) {
-        FormBody formBody = initFormBody(parameterMap);
-        Request request = new Request.Builder()
-                .url(url)
-                .post(formBody)
-                .build();
         String requestId = IdUtil.simpleUUID();
+        Request request = initRequest(url, null, parameterMap, null);
         log.info("RequestId: {}, OkHttpUtil.doPostWithFormData({}, {}) start!", requestId, url, JSON.toJSON(parameterMap));
-        return doCall(requestId, request, url, null, parameterMap);
+        return doCall(requestId, request, url, null, parameterMap, null);
     }
 
     public static String doPostWithFormData(String url, Map<String, String> headerMap, Map<String, String> parameterMap) {
-        Headers headers = initHeaders(headerMap);
-        FormBody formBody = initFormBody(parameterMap);
-        Request request = new Request.Builder()
-                .url(url)
-                .headers(headers)
-                .post(formBody)
-                .build();
         String requestId = IdUtil.simpleUUID();
+        Request request = initRequest(url, headerMap, parameterMap, null);
         log.info("RequestId: {}, OkHttpUtil.doPostWithFormData({}, {}, {}) start!", requestId, url, JSON.toJSON(headerMap), JSON.toJSON(parameterMap));
-        return doCall(requestId, request, url, headerMap, parameterMap);
+        return doCall(requestId, request, url, headerMap, parameterMap, null);
+    }
+
+    public static String doPostWithJson(String url, String json) {
+        String requestId = IdUtil.simpleUUID();
+        Request request = initRequest(url, null, null, json);
+        log.info("RequestId: {}, OkHttpUtil.doPostWithFormData({}, {}) start!", requestId, url, json);
+        return doCall(requestId, request, url, null, null, json);
+    }
+
+    public static String doPostWithJson(String url, Map<String, String> headerMap, String json) {
+        String requestId = IdUtil.simpleUUID();
+        Request request = initRequest(url, headerMap, null, json);
+        log.info("RequestId: {}, OkHttpUtil.doPostWithFormData({}, {}, {}) start!", requestId, url, JSON.toJSON(headerMap), json);
+        return doCall(requestId, request, url, headerMap, null, json);
     }
 
     /************************************************** Private Methods **************************************************/
 
-    private static Headers initHeaders(Map<String, String> headerMap) {
-        Headers.Builder builder = new Headers.Builder();
+    private static Request initRequest(String url, Map<String, String> headerMap, Map<String, String> parameterMap, String json) {
+        Request.Builder requestBuilder = new Request.Builder();
+        requestBuilder.url(url);
         if (null != headerMap) {
+            Headers.Builder headersBuilder = new Headers.Builder();
             for (Map.Entry<String, String> entry : headerMap.entrySet()) {
-                builder.add(entry.getKey(), entry.getValue());
+                headersBuilder.add(entry.getKey(), entry.getValue());
             }
+            requestBuilder.headers(headersBuilder.build());
         }
-        return builder.build();
-    }
-
-    private static FormBody initFormBody(Map<String, String> parameterMap) {
-        FormBody.Builder builder = new FormBody.Builder();
         if (null != parameterMap) {
-            for (Map.Entry<String, String> entry : parameterMap.entrySet()) {
-                builder.add(entry.getKey(), entry.getValue());
+            FormBody.Builder formBodyBuilder = new FormBody.Builder();
+            if (null != parameterMap) {
+                for (Map.Entry<String, String> entry : parameterMap.entrySet()) {
+                    formBodyBuilder.add(entry.getKey(), entry.getValue());
+                }
             }
+            requestBuilder.post(formBodyBuilder.build());
         }
-        return builder.build();
+        if (null != json && !"".equals(json)) {
+            RequestBody requestBody = FormBody.create(json, jsonMediaType);
+            requestBuilder.post(requestBody);
+        }
+        return requestBuilder.build();
     }
 
-    private static String doCall(String requestId, Request request, String url, Map<String, String> headerMap, Map<String, String> parameterMap) {
+    private static String doCall(String requestId, Request request, String url,
+                                 Map<String, String> headerMap, Map<String, String> parameterMap, String json) {
         try {
             Response response = okHttpClient.newCall(request).execute();
-            if (200!= response.code()) {
+            if (200 != response.code()) {
                 return EMPTY_STRING;
             }
             String resultData = response.body().string();
-            log.info("RequestId: {}, OkHttpUtil.doCall({}, {}, {}) finish! Result data: {}",
-                    requestId, url, JSON.toJSON(headerMap), JSON.toJSON(parameterMap), resultData);
+            log.info("RequestId: {}, OkHttpUtil.doCall({}, {}, {}, {}) finish! Result data: {}",
+                    requestId, url, JSON.toJSON(headerMap), JSON.toJSON(parameterMap), json, resultData);
             return resultData;
         } catch (IOException exception) {
-            log.error("RequestId: {}, OkHttpUtil.doCall({}, {}, {}) with Exception: ",
-                    requestId, url, JSON.toJSON(headerMap), JSON.toJSON(parameterMap), exception);
+            log.error("RequestId: {}, OkHttpUtil.doCall({}, {}, {}, {}) with Exception: ",
+                    requestId, url, JSON.toJSON(headerMap), JSON.toJSON(parameterMap), json, exception);
             return EMPTY_STRING;
         }
     }

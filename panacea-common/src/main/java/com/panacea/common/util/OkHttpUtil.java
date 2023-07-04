@@ -1,6 +1,7 @@
 package com.panacea.common.util;
 
 import com.alibaba.fastjson.JSON;
+import com.panacea.common.constant.CommonConstant;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
 
@@ -11,10 +12,7 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class OkHttpUtil {
 
-    private final static String EMPTY_STRING = "";
-    private final static String DEFAULT_CHARSET = "UTF-8";
     private final static MediaType jsonMediaType = MediaType.parse("application/json; charset=utf-8");
-
 
     private static OkHttpClient okHttpClient = new OkHttpClient.Builder()
             .connectTimeout(60L, TimeUnit.SECONDS)
@@ -97,7 +95,7 @@ public class OkHttpUtil {
         try {
             Response response = okHttpClient.newCall(request).execute();
             if (200 != response.code()) {
-                return EMPTY_STRING;
+                return CommonConstant.EMPTY_STRING;
             }
             String resultData = response.body().string();
             log.info("RequestId: {}, OkHttpUtil.doCall({}, {}, {}, {}) finish! Result data: {}",
@@ -106,7 +104,7 @@ public class OkHttpUtil {
         } catch (IOException exception) {
             log.error("RequestId: {}, OkHttpUtil.doCall({}, {}, {}, {}) with Exception: ",
                     requestId, url, JSON.toJSON(headerMap), JSON.toJSON(parameterMap), json, exception);
-            return EMPTY_STRING;
+            return CommonConstant.EMPTY_STRING;
         }
     }
 }

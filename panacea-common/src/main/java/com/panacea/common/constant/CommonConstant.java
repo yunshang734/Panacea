@@ -16,4 +16,6 @@ public interface CommonConstant {
      * Default charset
      */
     String DEFAULT_CHARSET = "UTF-8";
+
+    String EMPTY_STRING = "";
 }

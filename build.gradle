@@ -36,6 +36,9 @@ subprojects {
         // FastJSON
         implementation('com.alibaba:fastjson:2.0.28')
 
+        // EasyExcel
+        implementation('com.alibaba:easyexcel:3.3.2')
+
         // OKHttp
         implementation(platform("com.squareup.okhttp3:okhttp-bom:4.11.0"))
         // define any required OkHttp artifacts without version

@@ -2,4 +2,5 @@ rootProject.name = 'Panacea'
 include 'panacea-common'
 include 'panacea-open'
 include 'panacea-cms'
+include 'panacea-bo'
 

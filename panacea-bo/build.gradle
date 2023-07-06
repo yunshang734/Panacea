@@ -4,5 +4,12 @@ repositories {
 
 dependencies {
     implementation project(':panacea-common')
-    implementation project(':panacea-bo')
+}
+
+bootJar{
+    enabled = false
+}
+
+jar{
+    enabled = true
 }

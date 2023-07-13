@@ -5,4 +5,5 @@ repositories {
 dependencies {
     implementation project(':panacea-common')
     implementation project(':panacea-bo')
+    implementation project(':panacea-dal')
 }

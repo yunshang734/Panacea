@@ -1,6 +1,20 @@
 CREATE
 DATABASE `panacea`;
 
+CREATE TABLE `fitness_item`
+(
+    `id`          BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'ID',
+    `deleted`     TINYINT      NOT NULL DEFAULT '0' COMMENT '是否已删除，0：否；1：是',
+    `creator`     VARCHAR(16)  NOT NULL DEFAULT 'system' COMMENT '创建者',
+    `create_time` DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `modifier`    VARCHAR(16)  NOT NULL DEFAULT 'system' COMMENT '修改者',
+    `modify_time` DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+    `name`        VARCHAR(256) NOT NULL DEFAULT '' COMMENT '项目名称',
+    `type`        TINYINT      NOT NULL DEFAULT '0' COMMENT '训练类型，1：力量训练；2：有氧训练；',
+    `body_part`   TINYINT      NOT NULL DEFAULT '0' COMMENT '训练部位，0：全身；1：胸部；2：背部；3：肩部；4：肱二头肌；5：肱三头肌；6：腿部；',
+    PRIMARY KEY (id) USING BTREE
+) ENGINE='INNODB' DEFAULT CHARSET='UTF8MB4' AUTO_INCREMENT=0 COMMENT='健身-项目';
+
 CREATE TABLE `fitness_user`
 (
     `id`               BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'ID',
@@ -33,7 +47,7 @@ CREATE TABLE `fitness_user_program`
     PRIMARY KEY (id) USING BTREE
 ) ENGINE='INNODB' DEFAULT CHARSET='UTF8MB4' AUTO_INCREMENT=0 COMMENT='健身-用户计划';
 
-CREATE TABLE `fitness_item`
+CREATE TABLE `fitness_user_group`
 (
     `id`          BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'ID',
     `deleted`     TINYINT      NOT NULL DEFAULT '0' COMMENT '是否已删除，0：否；1：是',
@@ -41,11 +55,10 @@ CREATE TABLE `fitness_item`
     `create_time` DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `modifier`    VARCHAR(16)  NOT NULL DEFAULT 'system' COMMENT '修改者',
     `modify_time` DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-    `name`        VARCHAR(256) NOT NULL DEFAULT '' COMMENT '项目名称',
-    `type`        TINYINT      NOT NULL DEFAULT '0' COMMENT '训练类型，1：力量训练；2：有氧训练；',
-    `body_part`   TINYINT      NOT NULL DEFAULT '0' COMMENT '训练部位，0：全身；1：胸部；2：背部；3：肩部；4：肱二头肌；5：肱三头肌；6：腿部；',
+    `name`        VARCHAR(256) NOT NULL DEFAULT '' COMMENT '组合名称',
+    `user_id`     BIGINT       NOT NULL DEFAULT '0' COMMENT '用户ID',
     PRIMARY KEY (id) USING BTREE
-) ENGINE='INNODB' DEFAULT CHARSET='UTF8MB4' AUTO_INCREMENT=0 COMMENT='健身-项目';
+) ENGINE='INNODB' DEFAULT CHARSET='UTF8MB4' AUTO_INCREMENT=0 COMMENT='健身-用户组合';
 
 CREATE TABLE `fitness_user_item`
 (

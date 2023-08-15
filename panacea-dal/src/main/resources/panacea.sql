@@ -76,6 +76,21 @@ CREATE TABLE `fitness_user_item`
     PRIMARY KEY (id) USING BTREE
 ) ENGINE='INNODB' DEFAULT CHARSET='UTF8MB4' AUTO_INCREMENT=0 COMMENT='健身-用户项目';
 
+CREATE TABLE `fitness_user_group_item_bind`
+(
+    `id`          BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'ID',
+    `deleted`     TINYINT     NOT NULL DEFAULT '0' COMMENT '是否已删除，0：否；1：是',
+    `creator`     VARCHAR(16) NOT NULL DEFAULT 'system' COMMENT '创建者',
+    `create_time` DATETIME    NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `modifier`    VARCHAR(16) NOT NULL DEFAULT 'system' COMMENT '修改者',
+    `modify_time` DATETIME    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+    `user_id`     BIGINT      NOT NULL DEFAULT '0' COMMENT '用户ID',
+    `group_id`    BIGINT      NOT NULL DEFAULT '0' COMMENT '组合ID',
+    `item_id`     BIGINT      NOT NULL DEFAULT '0' COMMENT '项目ID',
+    `sort`        TINYINT     NOT NULL DEFAULT '0' COMMENT '排序',
+    PRIMARY KEY (id) USING BTREE
+) ENGINE='INNODB' DEFAULT CHARSET='UTF8MB4' AUTO_INCREMENT=0 COMMENT='健身-用户组合项目绑定';
+
 CREATE TABLE `fitness_user_clock`
 (
     `id`          BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'ID',

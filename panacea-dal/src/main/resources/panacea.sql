@@ -1,6 +1,8 @@
 CREATE
 DATABASE `panacea`;
 
+
+
 CREATE TABLE `fitness_item`
 (
     `id`          BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'ID',
@@ -14,6 +16,8 @@ CREATE TABLE `fitness_item`
     `body_part`   TINYINT      NOT NULL DEFAULT '0' COMMENT '训练部位，0：全身；1：胸部；2：背部；3：肩部；4：肱二头肌；5：肱三头肌；6：腿部；',
     PRIMARY KEY (id) USING BTREE
 ) ENGINE='INNODB' DEFAULT CHARSET='UTF8MB4' AUTO_INCREMENT=0 COMMENT='健身-项目';
+
+
 
 CREATE TABLE `fitness_user`
 (
@@ -32,6 +36,8 @@ CREATE TABLE `fitness_user`
     PRIMARY KEY (id) USING BTREE
 ) ENGINE='INNODB' DEFAULT CHARSET='UTF8MB4' AUTO_INCREMENT=0 COMMENT='健身-用户';
 
+
+
 CREATE TABLE `fitness_user_program`
 (
     `id`          BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'ID',
@@ -47,6 +53,8 @@ CREATE TABLE `fitness_user_program`
     PRIMARY KEY (id) USING BTREE
 ) ENGINE='INNODB' DEFAULT CHARSET='UTF8MB4' AUTO_INCREMENT=0 COMMENT='健身-用户计划';
 
+
+
 CREATE TABLE `fitness_user_group`
 (
     `id`          BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'ID',
@@ -59,6 +67,8 @@ CREATE TABLE `fitness_user_group`
     `user_id`     BIGINT       NOT NULL DEFAULT '0' COMMENT '用户ID',
     PRIMARY KEY (id) USING BTREE
 ) ENGINE='INNODB' DEFAULT CHARSET='UTF8MB4' AUTO_INCREMENT=0 COMMENT='健身-用户组合';
+
+
 
 CREATE TABLE `fitness_user_item`
 (
@@ -76,6 +86,8 @@ CREATE TABLE `fitness_user_item`
     PRIMARY KEY (id) USING BTREE
 ) ENGINE='INNODB' DEFAULT CHARSET='UTF8MB4' AUTO_INCREMENT=0 COMMENT='健身-用户项目';
 
+
+
 CREATE TABLE `fitness_user_group_item_bind`
 (
     `id`          BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'ID',
@@ -90,6 +102,8 @@ CREATE TABLE `fitness_user_group_item_bind`
     `sort`        TINYINT     NOT NULL DEFAULT '0' COMMENT '排序',
     PRIMARY KEY (id) USING BTREE
 ) ENGINE='INNODB' DEFAULT CHARSET='UTF8MB4' AUTO_INCREMENT=0 COMMENT='健身-用户组合项目绑定';
+
+
 
 CREATE TABLE `fitness_user_clock`
 (
@@ -106,6 +120,8 @@ CREATE TABLE `fitness_user_clock`
     `status`      TINYINT     NOT NULL DEFAULT '0' COMMENT '状态，0：未完成；1：已完成',
     PRIMARY KEY (id) USING BTREE
 ) ENGINE='INNODB' DEFAULT CHARSET='UTF8MB4' AUTO_INCREMENT=0 COMMENT='健身-用户打卡';
+
+
 
 CREATE TABLE `fitness_user_clock_detail`
 (

@@ -125,6 +125,8 @@ CREATE TABLE `fitness_user_clock_detail`
     PRIMARY KEY (id) USING BTREE
 ) ENGINE='INNODB' DEFAULT CHARSET='UTF8MB4' AUTO_INCREMENT=0 COMMENT='健身-用户打卡细节';
 
+
+
 CREATE TABLE `photography_user`
 (
     `id`               BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'ID',

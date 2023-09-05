@@ -165,6 +165,6 @@ CREATE TABLE `photography_user_category_bind`
     `modifier`    VARCHAR(16) NOT NULL DEFAULT 'system' COMMENT '修改者',
     `modify_time` DATETIME    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
     `user_id`     BIGINT      NOT NULL DEFAULT '0' COMMENT '用户ID',
-    `category_id`    BIGINT      NOT NULL DEFAULT '0' COMMENT '组合ID',
+    `category_id`    BIGINT      NOT NULL DEFAULT '0' COMMENT '分类ID',
     PRIMARY KEY (id) USING BTREE
 ) ENGINE='INNODB' DEFAULT CHARSET='UTF8MB4' AUTO_INCREMENT=0 COMMENT='摄影-用户分类绑定';
